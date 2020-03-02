@@ -2,6 +2,8 @@
 
 Refreshes a large clock with seconds on the terminal.
 
+![Screenshot](/screenshots/clock-sh.png?raw=true "Screenshot")
+
 ### Usage
 
 ```bash
