@@ -8,7 +8,7 @@ main() {
         fi
     done
 
-    trap 'tput cnorm; exit 0' SIGINT
+    trap 'tput cnorm; exit' SIGINT
 
     clear
     tput civis
@@ -20,10 +20,7 @@ main() {
     center_x=$(( ($COLUMNS / 2) - ($width  / 2) ))
     center_y=$(( ($LINES   / 2) - ($height / 2) ))
 
-    centering_spaces=$(           awk 'BEGIN{ for(i = 0; i < '$(( ($center_y * $COLUMNS) ))'; i++) { printf " " } print; exit }')
-    horizontal_centering_spaces=$(awk 'BEGIN{ for(i = 0; i < '$center_x';                     i++) { printf " " } print; exit }')
-
-    printf "$centering_spaces"
+    horizontal_centering_spaces=$(dup $center_x ' ')
 
     while :; do
         tput cup $center_y 0
@@ -37,6 +34,10 @@ main() {
 
 render() {
     date +%X | toilet --metal -F border -f ascii12
+}
+
+dup() {
+    awk "BEGIN{ for(i = 0; i < $1; i++) { printf \"$2\" } print; exit }"
 }
 
 main "$@"
