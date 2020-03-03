@@ -3,7 +3,7 @@
 main() {
     for req in tput toilet; do
         if ! command -v $req >/dev/null; then
-            printf >&2 "ERROR: please install $req"
+            printf >&2 "ERROR: please install $req\n"
             exit 1
         fi
     done
@@ -23,11 +23,13 @@ main() {
     centering_spaces=$(           awk 'BEGIN{ for(i = 0; i < '$(( ($center_y * $COLUMNS) ))'; i++) { printf " " } print; exit }')
     horizontal_centering_spaces=$(awk 'BEGIN{ for(i = 0; i < '$center_x';                     i++) { printf " " } print; exit }')
 
+    printf "$centering_spaces"
+
     while :; do
-        tput cup 0 0
-        printf "$centering_spaces"
+        tput cup $center_y 0
         render | sed 's/^/'"$horizontal_centering_spaces"'/'
-        sleep 1
+        # Sleep until next second.
+        sleep $(printf "scale=3; 1 - $(date +%N) / 1000000000\n" | bc)
     done  
 
     tput cnorm
