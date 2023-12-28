@@ -11,6 +11,6 @@ Refreshes a large clock with seconds on the terminal.
 ```
 ### Dependencies
 
+- python
 - tput (part of ncurses)
 - toilet (http://caca.zoy.org/wiki/toilet)
-- figlet (for fonts, http://www.figlet.org/)
