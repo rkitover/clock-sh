@@ -1,12 +1,23 @@
 #!/bin/sh
 
 main() {
-    for req in python toilet tput; do
+    for req in toilet tput; do
         if ! command -v $req >/dev/null; then
             printf >&2 "please install $req\n"
             exit 1
         fi
     done
+
+    if command -v python3 >/dev/null; then
+        python=python3
+    else
+        python=python
+    fi
+
+    if ! command -v $python >/dev/null; then
+        printf >&2 "please install python\n"
+        exit 1
+    fi
 
     trap 'tput cnorm; exit' SIGINT
 
@@ -44,7 +55,7 @@ dup() {
 }
 
 sleep_until_next_second() {
-    python -c 'import time; time.sleep(1 - (time.time_ns() - (int(time.time()) * 1000000000)) / 1000000000)' >/dev/null 2>&1
+    $python -c 'import time; time.sleep(1 - (time.time_ns() - (int(time.time()) * 1000000000)) / 1000000000)' >/dev/null 2>&1
 }
 
 main "$@"
